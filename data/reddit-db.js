@@ -1,6 +1,6 @@
 /* Mongoose Connection */
 const mongoose = require("mongoose");
-assert = require("assert");
+const assert = require("assert");
 
 const url = "mongodb://localhost/reddit-db";
 mongoose.Promise = global.Promise;
