@@ -30,11 +30,6 @@ app.use(expressValidator());
 // Routes
 
 
-
-
-
-
-
 app.listen(3000, () => {
   console.log('Search listening on port localhost:3000!');
 });
