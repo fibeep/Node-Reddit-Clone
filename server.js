@@ -32,15 +32,7 @@ app.use(expressValidator());
 
 
 
-// ''' Home Route '''
-app.get('/', (req, res) => {
-    res.render('home')
-})
 
-// New Post Route
-app.get('/posts/new', (req,res) => {
-    res.render('post_form')
-})
 
 
 app.listen(3000, () => {
