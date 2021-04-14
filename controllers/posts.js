@@ -1,17 +1,21 @@
-
+// Model
+    const Post = require('../models/post');
 
 
 module.exports = (app) => {
 
-  // Model
-    const Post = require('../models/post');
-  // CREATE
-  const exphbs  = require('express-handlebars');
-  // MIDDLEWARE
+  // New Post Route
+  app.post('/posts/new', (req,res) => {
+      const post = new Post(req.body);
+      // Save post to DB
+      post.save((err, post) => {
+        // redirect to root 
+        return res.redirect('/')
+      })
+  })
 
-  app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-  app.set('view engine', 'handlebars');
-  // ''' Home Route '''
+
+  // Home Route 
   app.get('/', (req, res) => {
   
     Post.find({}).lean()
@@ -23,10 +27,12 @@ module.exports = (app) => {
     })
   })
 
-  // New Post Route
-  app.get('/posts/new', (req,res) => {
-      res.render('post_form')
+  // Post Form Route
+  app.get('/posts/new', (req, res) => {
+    res.render('posts-new')
   })
+
+
   // View Post Route
   app.get("/posts/:id", function(req, res) {
   // LOOK UP THE POST
@@ -39,16 +45,4 @@ module.exports = (app) => {
     });
   });
   
-
-  app.post('/posts/new', (req, res) => {
-    // INSTANTIATE INSTANCE OF POST MODEL
-    const post = new Post(req.body);
-
-    // SAVE INSTANCE OF POST MODEL TO DB
-    post.save((err, post) => {
-      // REDIRECT TO THE ROOT
-      return res.redirect(`/`);
-    })
-  });
-
 };
