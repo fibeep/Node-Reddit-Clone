@@ -1,4 +1,8 @@
-  module.exports = function(app) {
+// Import Model
+const Comment = require('../models/comment');
+  
+  
+module.exports = function(app) {
 
     // CREATE Comment route
     app.post('/posts/:postId/comments', function(req, res) {
