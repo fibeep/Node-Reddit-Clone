@@ -29,7 +29,7 @@ module.exports = (app) => {
 
   // Post Form Route
   app.get('/posts/new', (req, res) => {
-    res.render('posts-new')
+    res.render('post_form')
   })
 
 

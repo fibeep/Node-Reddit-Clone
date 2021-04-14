@@ -12,6 +12,7 @@ import { addHook } from 'pirates';
 // App Setup
 const app = express();
 const port = 3000
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(expressValidator());
@@ -20,6 +21,8 @@ app.use(expressValidator());
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+
+require('./controllers/posts.js')(app);
 
 // Set db
 require('./data/reddit-db');
