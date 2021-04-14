@@ -1,27 +1,25 @@
-// Import Model
+const Post = require('../models/post');
 const Comment = require('../models/comment');
-  
-  
-module.exports = function(app) {
 
-    // CREATE Comment route
-    app.post('/posts/:postId/comments', function(req, res) {
-        
-        // Instantiate Instance of Model
-        const comment = new Comment(req.body);
+// CREATE Comment
+app.post("/posts/:postId/comments", function(req, res) {
+  // INSTANTIATE INSTANCE OF MODEL
+  const comment = new Comment(req.body);
 
-        // Save Instnace of comment model to db
-        comment
-            .save()
-            .then(comment => {
-                // Redirect to Root
-                return res.redirect('/')
-            })
-            .catch(err => {
-                console.log(err)
-            })
+  // SAVE INSTANCE OF Comment MODEL TO DB
+  comment
+    .save()
+    .then(comment => {
+      return Post.findById(req.params.postId);
     })
-
-    
-
-  };
+    .then(post => {
+      post.comments.unshift(comment);
+      return post.save();
+    })
+    .then(post => {
+      res.redirect(`/`);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
