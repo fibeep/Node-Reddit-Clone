@@ -5,14 +5,17 @@
 module.exports = (app) => {
 
   // New Post Route
-  app.post('/posts/new', (req,res) => {
-      const post = new Post(req.body);
-      // Save post to DB
-      post.save((err, post) => {
-        // redirect to root 
-        return res.redirect('/')
-      })
-  })
+app.post("/posts/new", (req, res) => {
+  if (req.user) {
+    var post = new Post(req.body);
+
+    post.save(function (err, post) {
+      return res.redirect(`/`);
+    });
+  } else {
+    return res.status(401); // UNAUTHORIZED
+  }
+});
 
 
   // Home Route 
