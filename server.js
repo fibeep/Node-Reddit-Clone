@@ -15,6 +15,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(expressValidator());
 app.use(cookieParser()); // Add this after you initialize express.
+
+// CUSTOM MIDDLEWARE
+
+var checkAuth = (req, res, next) => {
+  console.log("Checking authentication");
+  if (
+    typeof req.cookies.nToken === "undefined" ||
+    req.cookies.nToken === null
+  ) {
+    req.user = null;
+  } else {
+    var token = req.cookies.nToken;
+    var decodedToken = jwt.decode(token, { complete: true }) || {};
+    req.user = decodedToken.payload;
+  }
+
+  next();
+};
+app.use(checkAuth);
+
 // Middleware
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
