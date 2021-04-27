@@ -4,15 +4,17 @@ const express = require('express');
 const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+var cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 
 // App Setup
-const app = express();
+var app = express();
 const port = 3000
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(expressValidator());
-
+app.use(cookieParser()); // Add this after you initialize express.
 // Middleware
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
