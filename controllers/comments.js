@@ -10,11 +10,14 @@ app.post("/posts/:postId/comments", function(req, res) {
   if (req.user) {
     const comment = new Comment(req.body);
     comment.author = req.user._id;
+    
     comment.save()
-    .then(comment => {
+    .then(() => {
+      
       return User.findById(req.user._id)
     })
     .then(user => {
+      console.log(comment);
       user.comments.unshift(comment)
       user.save()
       res.redirect('/')
