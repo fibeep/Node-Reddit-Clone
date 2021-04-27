@@ -27,18 +27,22 @@ app.post("/posts/new", (req, res) => {
 });
 
 
-  // Home Route 
-app.get("/", (req, res) => {
-  var currentUser = req.user;
-
-  Post.find({})
-    .then((posts) => {
-      res.render("posts-index", { posts, currentUser });
-    })
-    .catch((err) => {
-      console.log(err.message);
+  // Home (INDEX) Route 
+    app.get("/", (req, res) => {
+      var currentUser = req.user;
+      // res.render('home', {});
+      console.log(req.cookies);
+      Post.find({})
+        .lean()
+        .populate("author")
+        .then((posts) => {
+          res.render("posts-index", { posts, currentUser });
+          // res.render('home', {});
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     });
-}); 
 
   // Post Form Route
   app.get('/posts/new', (req, res) => {
@@ -46,8 +50,9 @@ app.get("/", (req, res) => {
   })
   // SUBREDDIT
   app.get("/n/:subreddit", function(req, res) {
-    Post.find({subreddit: req.params.subreddit}).lean()
-      .then(posts => res.render("posts-index", {posts}))
+    var currentUser = req.user
+    Post.find({subreddit: req.params.subreddit}).lean().populate('author')
+      .then(posts => res.render("posts-index", {posts, currentUser}))
       .catch(err => {
         console.log(err)
       })
@@ -56,10 +61,11 @@ app.get("/", (req, res) => {
 
   // View Post Route
   app.get("/posts/:id", function(req, res) {
+    var currentUser = req.user
   // LOOK UP THE POST
-  Post.findById(req.params.id).lean().populate('comments')
+  Post.findById(req.params.id).lean().populate('comments').populate('author')
     .then(post => {
-      res.render("posts-show", { post });
+      res.render("posts-show", { post, currentUser });
     })
     .catch(err => {
       console.log(err.message);
