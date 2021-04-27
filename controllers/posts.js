@@ -16,16 +16,17 @@ module.exports = (app) => {
 
 
   // Home Route 
-  app.get('/', (req, res) => {
-  
-    Post.find({}).lean()
-    .then(posts => {
-      res.render('posts-index', { posts });
+app.get("/", (req, res) => {
+  var currentUser = req.user;
+
+  Post.find({})
+    .then((posts) => {
+      res.render("posts-index", { posts, currentUser });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err.message);
-    })
-  })
+    });
+}); 
 
   // Post Form Route
   app.get('/posts/new', (req, res) => {
