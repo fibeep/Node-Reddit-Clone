@@ -19,7 +19,8 @@ describe('Posts', function() {
   const newPost = {
       title: 'post title',
       url: 'https://www.google.com',
-      summary: 'post summary'
+      summary: 'post summary',
+      subreddit: 'testsubreddit'
   };
   const user = {
     username: "poststest",
