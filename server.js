@@ -44,6 +44,7 @@ app.set('view engine', 'handlebars');
 require('./controllers/posts.js')(app);
 require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
+require("./controllers/replies.js")(app);
 
 // Set db
 require('./data/reddit-db');
