@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(expressValidator());
 app.use(cookieParser()); // Add this after you initialize express.
-
+app.use(express.static("public"));
 // CUSTOM MIDDLEWARE
 
 var checkAuth = (req, res, next) => {
