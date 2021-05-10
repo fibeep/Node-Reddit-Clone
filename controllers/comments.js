@@ -2,8 +2,6 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 const User = require("../models/user");
 
-module.exports = (app) => {
-// CREATE Comment
 
 module.exports = function (app) {
     // CREATE Comment
@@ -30,4 +28,4 @@ module.exports = function (app) {
                 console.log(err);
             });
     });
-}}
+}
